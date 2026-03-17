@@ -24,10 +24,9 @@ function App() {
       const response = await axios.post('http://localhost:5000/api/v1/analysis', {
         code: code
       });
-
       setResult(response.data);
     } catch (err) {
-      setError(err.response?.data?.error || 'Failed to analyze code');
+      setError(err.response?.data?.error || 'Failed to analyze code. Please ensure the backend server is running.');
     } finally {
       setLoading(false);
     }
@@ -35,31 +34,27 @@ function App() {
 
   return (
     <div className="app">
-      <div className="container">
-        <header className="header">
+      <header className="header">
+        <div className="header-content">
           <h1>AI Code Analyzer</h1>
-          <p>Analyze your JavaScript code for potential issues and improvements</p>
-        </header>
+          <p>Professional Static Analysis & Optimization via LLM</p>
+        </div>
+      </header>
 
-        <main className="main">
-          <div className="input-section">
-            <CodeInput
-              value={code}
-              onChange={setCode}
-              onAnalyze={analyzeCode}
-              disabled={loading}
-            />
-          </div>
+      <main className="main">
+        <CodeInput
+          value={code}
+          onChange={setCode}
+          onAnalyze={analyzeCode}
+          disabled={loading}
+        />
 
-          <div className="results-section">
-            <ResultsDisplay
-              result={result}
-              loading={loading}
-              error={error}
-            />
-          </div>
-        </main>
-      </div>
+        <ResultsDisplay
+          result={result}
+          loading={loading}
+          error={error}
+        />
+      </main>
     </div>
   );
 }
